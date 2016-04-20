@@ -1,3 +1,4 @@
+ID1
 train_data_num = pd.concat((train_data_num,
                             np.sum(train_data_num, axis=1),
                             np.sum(train_data_num != 0, axis=1),
@@ -7,7 +8,6 @@ model = RandomForestClassifier(n_jobs=-1, min_samples_leaf=1, n_estimators=77,
                                max_depth=None).fit(train_data, train_labels)
 0.0563557937625
 
-#####
 ID2
 train_data_num['div'] = (train_data_num.loc[:,'60'] / train_data_num.loc[:,'59'])
 train_data_num['div'] = train_data_num['div'].fillna(0)
@@ -15,11 +15,177 @@ model = RandomForestClassifier(n_jobs=-1, random_state=1).fit(train_data, train_
 0.0587131533497
 
 
-ID 3
+ID3
 train_data_num['div'] = (train_data_num.loc[:,'60'] / train_data_num.loc[:,'59'])
 train_data_num['div'] = train_data_num['div'].fillna(0)
 model = RandomForestClassifier(n_jobs=-1, min_samples_leaf=1, n_estimators=77,
                                    min_samples_split=2, random_state=1, max_features=771,
                                    max_depth=None).fit(train_data, train_labels)
 0.0529183021811
+
+ID4
+train_data_num['div'] = (train_data_num.loc[:,'60'] / train_data_num.loc[:,'59'])
+train_data_num['div'] = train_data_num['div'].fillna(0)
+model = RandomForestClassifier(n_jobs=-1, min_samples_leaf=1, n_estimators=66,
+                                   min_samples_split=3, random_state=1, max_features=783,
+                                   max_depth=None).fit(train_data, train_labels)
+0.0529577272061
+
+ID5
+print('Model 1')
+model = ExtraTreesClassifier(n_jobs=-1, min_samples_leaf=1, n_estimators=40,
+                                 min_samples_split=3, random_state=1,
+                                 max_features=1743, max_depth=None).fit(train_data_combo, train_labels)
+preds_1 = model.predict(test_data_combo)
+
+print('Model 2')
+model = RandomForestClassifier(n_jobs=-1, min_samples_leaf=1, n_estimators=77,
+                                   min_samples_split=2, random_state=1, max_features=771,
+                                   max_depth=None).fit(train_data_combo, train_labels)
+preds_2 = model.predict(test_data_combo)
+
+print('Model 3')
+model = BaggingClassifier(max_features=0.75,
+                          n_estimators=20,
+                          random_state=1, n_jobs=-1).fit(train_data_combo, train_labels)
+preds_3 = model.predict(test_data_combo)
+
+print('Model 4')
+model = LogisticRegression(penalty='l1',
+                               C=0.9029677391429398,
+                               n_jobs=-1, random_state=1).fit(train_data_combo, train_labels)
+preds_4 = model.predict(test_data_combo)
+
+print('Model 5')
+model = KNeighborsClassifier(n_neighbors=1, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_5 = model.predict(test_data_combo_slim)
+
+print('Model 6')
+model = KNeighborsClassifier(n_neighbors=2, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_6 = model.predict(test_data_combo_slim)
+
+print('Model 7')
+model = KNeighborsClassifier(n_neighbors=5, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_7 = model.predict(test_data_combo_slim)
+
+print('Model 8')
+model = KNeighborsClassifier(n_neighbors=10, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_8 = model.predict(test_data_combo_slim)
+
+preds = np.column_stack((preds_1, preds_2, preds_3, preds_4, preds_5, preds_6, preds_7, preds_8))
+
+model = BaggingClassifier(max_features=0.75,
+                              n_estimators=20,
+                              random_state=1, n_jobs=-1).fit(cv_preds_stack, cv_labels)
+results = model.predict(preds)
+----
 #####
+# Including Categorical
+#
+# AdaBoost (n_estimators=200, learning_rate=0.5): 0.117260743164
+# Extra Trees, default: 0.0631676876621
+#    max_features = sqrt(5932) ~ 77
+# Extra Trees, max_features=100: 0.0618510371579
+# Extra Trees, max_features=200: 0.060558039058
+# Extra Trees, max_features=300: 0.0605028501147
+# Extra Trees, max_features=400: 0.0586185419081
+# Extra Trees, max_features=400, n_estimators=20: 0.0582874082484
+# Extra Trees, max_features=700: 0.0591231265325
+# Extra Trees, max_features=1000, n_jobs=-1, random_state=1: 0.0587289197947
+# Extra Trees, max_features=1500, n_jobs=-1, random_state=1: 0.0560088826335
+# Extra Trees, max_features=2500, n_jobs=-1, random_state=1: 0.0558354488247
+# Extra Trees, max_features=2500, n_estimators=20, n_jobs=-1, random_state=1: 0.0560798378573
+# Extra Trees, max_features=None, n_jobs=-1, random_state=1: 0.0557408324323 (0.94658)
+# Extra Trees, n_jobs: -1, min_samples_leaf: 2, n_estimators: 97,
+#                                  min_samples_split: 2, random_state: 1,
+#                                  max_features: 2551, max_depth: None: 0.0576172547022
+# Extra Trees, n_jobs=-1, min_samples_leaf=1, n_estimators=40,
+#                                  min_samples_split=3, random_state=1,
+#                                  max_features=1743, max_depth=None: 0.0544951412539
+# Random Forest, default, random_state=1: 0.0604555488096
+# Random Forest, max_features=200: 0.0577512973628
+# Random Forest, n_jobs=-1, min_samples_leaf=1, n_estimators=77,
+#                                    min_samples_split=2, random_state=1, max_features=771,
+#                                    max_depth=None: 0.0534938540261
+# Random Forest: n_jobs=-1, min_samples_leaf=1, n_estimators=71,
+#                                    min_samples_split=4, random_state=1, max_features=1148,
+#                                    max_depth=None: 0.054361106674
+# Random Forest: n_jobs=-1, min_samples_leaf=1, n_estimators=50,
+#                                    min_samples_split=4, random_state=1, max_features=966,
+#                                    max_depth=None: 0.054250737614
+# Logistic: 0.106388517105
+# Logistic, penalty='l2', C=4, n_jobs=-1: 0.106625055755
+# Logistic, penalty='l1', C=0.9029677391429398, n_jobs=-1: 0.106506785964
+# Bagging, max_features=0.07, random_state=1: 0.130285290212
+# Bagging, max_features=0.20, random_state=1: 0.0653121753236
+# Bagging, max_features=0.50, random_state=1: 0.0560640870545
+# Bagging, max_features=0.75, random_state=1: 0.0568524849905
+
+
+-----
+# Only Numerical
+#
+# AdaBoost, default: 0.269290547594
+# AdaBoost (n_estimators=200, learning_rate=0.5): 0.269448216614
+# AdaBoost (n_estimators=200, learning_rate=0.1): 0.269053944606
+# AdaBoost (base_estimator=ExtraTreeClassifier(max_depth=1)): 0.28954478716
+# AdaBoost (base_estimator=ExtraTreeClassifier(max_depth=2)): 0.274588670919
+# AdaBoost (base_estimator=ExtraTreeClassifier()): 0.117907238733 (?)
+# Neural network, default settings: 0.25234751258
+# Neural network, default ('logistic'): 0.244794532236
+# XGBoost, default: 0.25718831277
+# kNN, k=1: 0.139336326082
+# kNN, k=2: 0.135756900122
+# kNN, k=3: 0.153677542531
+# kNN, k=5: 0.170470769768
+# kNN, k=10: 0.192979920115
+# kNN, k=20: 0.216529877817
+# Gaussian NB: 0.326915637508
+# Logistic Regression: 0.278767271043
+# Random Forest, default, random_state=1: 0.117308028517
+# Random Forest, random_state=1, criterion='entropy': 0.117615504054
+# Random Forest, n_estimators=20: 0.114233264756
+# Random Forest, max_features=None: 0.116054499698
+# Random Forest, n_estimators=20, max_features=None: 0.11560505746
+# Extra Trees, default: 0.111379161105
+# Extra Trees, n_estimators=15: 0.11488761941
+# Extra Trees, n_estimators=20: 0.112687928843
+# Extra Trees, n_estimators=30: 0.112538147811
+# Extra Trees, n_estimators=50: 0.112459332881
+# Extra Trees, max_features=None: 0.11061440569
+# Bagging, default: 0.114848167656
+# Bagging, n_estimators=20: 0.113973028885
+# SGD, loss='perceptron': 0.350607692135
+# Gradient Boosting, default: 0.256360526245
+# Gradient Boosting, loss='exponential', n_estimators=200, max_features=None, random_state=1: 0.253285713067
+
+###
+# Feature engineering:
+# -----
+# Using KFold (5 fold, random_state=1)
+# RF, n_jobs=-1, min_samples_leaf=1, n_estimators=50,
+#                                    random_state=1, max_features=None: 0.112569652835
+# Same RF (add numerical added together): 0.110898220369
+# RF, n_jobs=-1, random_state=1
+#   (Default): 0.116905938141
+#   (Preprocessing, power 2): 0.114288406707
+#   (Preprocessing, power 2), max_features=200: 0.114682610337
+#   (Preprocessing, power 2), max_features=200, n_estimators=30: 0.112569653146
+#   (Preprocessing, power 2; numerical features added together column): 0.110779953686
+#   (Sum, # non-0 features), n_jobs=-1, random_state=1, max_features=None, n_estimators=30: 0.111260893489
+#
+# # train_data_num,
+#                             np.sum(train_data_num, axis=1),
+#                             np.sum(train_data_num != 0, axis=1),
+#                             pd.Series(dists1), pd.Series(dists2), pd.Series(dists4)): 0.100538460894
+
+-----
+# Tiny
+#
+# XGBoost, default: 0.113224072446
+# kNN, k=1: 0.08194771365
+# kNN, k=2: 0.0818609774763
+# kNN, k=5: 0.108130910389
+# kNN, k=10: 0.124293373591
+# Bagging, default: 0.0595804119027
+# Bagging, n_estimators=20: 0.0583583592049
