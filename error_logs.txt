@@ -198,6 +198,129 @@ model = BaggingClassifier(max_features=0.7268891521595635,
                               random_state=1, n_jobs=-1).fit(cv_preds_stack, cv_labels)
 results = model.predict(preds)
 0.0504741924799
+
+########################################
+ID8
+print('Model 1')
+model = ExtraTreesClassifier(n_jobs=-1, min_samples_leaf=2, n_estimators=99,
+                                 min_samples_split=3, random_state=1,
+                                 max_features=1611, max_depth=None).fit(train_data_combo, train_labels)
+preds_1 = model.predict(test_data_combo)
+
+print('Model 2')
+model = RandomForestClassifier(n_jobs=-1, min_samples_leaf=1, n_estimators=77,
+                                   min_samples_split=2, random_state=1, max_features=771,
+                                   max_depth=None).fit(train_data_combo, train_labels)
+preds_2 = model.predict(test_data_combo)
+
+print('Model 3')
+model = BaggingClassifier(max_features=0.394512412319, n_estimators=435,
+                              random_state=1, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_3 = model.predict(test_data_combo_slim)
+
+print('Model 4')
+model = LogisticRegression(penalty='l1', C=0.9029677391429398,
+                               n_jobs=-1, random_state=1).fit(train_data_combo, train_labels)
+preds_4 = model.predict(test_data_combo)
+
+print('Model 5')
+model = KNeighborsClassifier(n_neighbors=1, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_5 = model.predict(test_data_combo_slim)
+
+print('Model 6')
+model = KNeighborsClassifier(n_neighbors=2, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_6 = model.predict(test_data_combo_slim)
+
+print('Model 7')
+model = KNeighborsClassifier(n_neighbors=4, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_7 = model.predict(test_data_combo_slim)
+
+print('Model 8')
+model = KNeighborsClassifier(n_neighbors=8, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_8 = model.predict(test_data_combo_slim)
+
+print('Model 9')
+model = KNeighborsClassifier(n_neighbors=16, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_9 = model.predict(test_data_combo_slim)
+
+print('Model 10')
+model = KNeighborsClassifier(n_neighbors=32, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_10 = model.predict(test_data_combo_slim)
+
+print('Model 11')
+model = MLPClassifier(hidden_layer_sizes=900).fit(train_data_combo_slim, train_labels)
+preds_11 = model.predict(test_data_combo_slim)
+
+preds = np.column_stack((preds_1, preds_2, preds_3, preds_4, 
+                         preds_5, preds_6, preds_7, preds_8,
+                         preds_9, preds_10, preds_11))
+
+BaggingClassifier(max_features=0.7268891521595635,
+                              n_estimators=26, random_state=1, n_jobs=-1).fit(cv_preds_stack, cv_labels)
+
+0.051168000442
+
+########################################
+ID9
+print('Model 1')
+model = ExtraTreesClassifier(n_jobs=-1, min_samples_leaf=2, n_estimators=99,
+                                 min_samples_split=3, random_state=1,
+                                 max_features=1611, max_depth=None).fit(train_data_combo, train_labels)
+preds_1 = model.predict(test_data_combo)
+
+print('Model 2')
+model = RandomForestClassifier(n_jobs=-1, min_samples_leaf=1, n_estimators=77,
+                                   min_samples_split=2, random_state=1, max_features=771,
+                                   max_depth=None).fit(train_data_combo, train_labels)
+preds_2 = model.predict(test_data_combo)
+
+print('Model 3')
+model = BaggingClassifier(max_features=0.394512412319, n_estimators=435,
+                              random_state=1, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_3 = model.predict(test_data_combo_slim)
+
+print('Model 4')
+model = LogisticRegression(penalty='l1', C=0.9029677391429398,
+                               n_jobs=-1, random_state=1).fit(train_data_combo, train_labels)
+preds_4 = model.predict(test_data_combo)
+
+print('Model 5')
+model = KNeighborsClassifier(n_neighbors=1, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_5 = model.predict(test_data_combo_slim)
+
+print('Model 6')
+model = KNeighborsClassifier(n_neighbors=2, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_6 = model.predict(test_data_combo_slim)
+
+print('Model 7')
+model = KNeighborsClassifier(n_neighbors=4, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_7 = model.predict(test_data_combo_slim)
+
+print('Model 8')
+model = KNeighborsClassifier(n_neighbors=8, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_8 = model.predict(test_data_combo_slim)
+
+print('Model 9')
+model = KNeighborsClassifier(n_neighbors=16, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_9 = model.predict(test_data_combo_slim)
+
+print('Model 10')
+model = KNeighborsClassifier(n_neighbors=32, n_jobs=-1).fit(train_data_combo_slim, train_labels)
+preds_10 = model.predict(test_data_combo_slim)
+
+print('Model 11')
+model = MLPClassifier(hidden_layer_sizes=900).fit(train_data_combo_slim, train_labels)
+preds_11 = model.predict(test_data_combo_slim)
+
+preds = np.column_stack((preds_1, preds_2, preds_3, preds_4, 
+                         preds_5, preds_6, preds_7, preds_8,
+                         preds_9, preds_10, preds_11))
+
+BaggingClassifier(max_features=0.6297698699152728,
+                              n_estimators=60,
+                              random_state=1, n_jobs=-1).fit(cv_preds_stack, cv_labels)
+
+0.0509472692212
 ----
 #####
 # Including Categorical
@@ -243,7 +366,8 @@ results = model.predict(preds)
 # Bagging, max_features=0.20, random_state=1: 0.0653121753236
 # Bagging, max_features=0.50, random_state=1: 0.0560640870545
 # Bagging, max_features=0.75, random_state=1: 0.0568524849905
-
+# Bagging, max_features=0.394512412319, n_estimators=435,
+                              random_state=1, n_jobs=-1: 0.0512784166966
 
 -----
 # Only Numerical
