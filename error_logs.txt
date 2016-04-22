@@ -321,6 +321,22 @@ BaggingClassifier(max_features=0.6297698699152728,
                               random_state=1, n_jobs=-1).fit(cv_preds_stack, cv_labels)
 
 0.0509472692212
+
+########################################
+ID10
+Same as ID9, but kNN, k=32 removed.
+BaggingClassifier(max_features=0.7268891521595635,
+                              n_estimators=26,
+                              random_state=1, n_jobs=-1).fit(cv_preds_stack, cv_labels)
+0.0507869761563
+
+########################################
+ID11
+Same as ID9, but with old bagging added back
+BaggingClassifier(max_features=0.6264106323954737,
+                              n_estimators=104,
+                              random_state=1, n_jobs=-1).fit(cv_preds_stack, cv_labels)
+0.0506976199769
 ----
 #####
 # Including Categorical
