@@ -222,6 +222,9 @@ results = model.predict(preds)
 # Extra Trees, n_jobs=-1, min_samples_leaf=1, n_estimators=40,
 #                                  min_samples_split=3, random_state=1,
 #                                  max_features=1743, max_depth=None: 0.0544951412539
+# Extra Trees, n_jobs=-1, min_samples_leaf=2, n_estimators=99,
+#                                 min_samples_split=3, random_state=1,
+#                                 max_features=1611, max_depth=None: 0.0538565243493
 # Random Forest, default, random_state=1: 0.0604555488096
 # Random Forest, max_features=200: 0.0577512973628
 # Random Forest, n_jobs=-1, min_samples_leaf=1, n_estimators=77,
