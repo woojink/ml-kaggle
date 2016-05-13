@@ -1,7 +1,7 @@
 # The Best Kaggle Team
 [Woojin Kim](http://woojink.com), [Carlos Espino Garcia](http://www.cespinog.com/), [Yijing Sun](https://github.com/Phoebe0711)
 
-This project was completed for COMS 4721: Machine Learning for Data Science at Columbia University in Spring 2016.
+This project was completed for the in-class Kaggle competition in COMS 4721: Machine Learning for Data Science at Columbia University, Spring 2016. We finished [second place](https://inclass.kaggle.com/c/coms4721spring2016/leaderboard) with the approach described below.
 
 ## Data preprocessing and feature design
 The given dataset consisted of both numerical and categorical predictors. In order to use these variables effectively in `scikit-learn`, we split the dataset into two for preprocessing.
